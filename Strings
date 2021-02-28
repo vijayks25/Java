@@ -1,0 +1,82 @@
+//Input a string in captial letters and arrange the string in alphabetical order
+
+public class Alphabetical
+{
+    public static void main(String s)
+    {
+        int i,len,j;
+        char ch,chr;
+        len=s.length();
+        for(j=65;j<=90;j=j+1)
+        {
+            chr=(char)j;
+            for(i=0;i<len;i=i+1)
+            {
+                ch=s.charAt(i);
+                if(chr==ch)
+                System.out.print(chr);
+            }
+        }
+    }
+}
+
+public class Sentence
+{
+    public static void main(String s)
+    {
+        int i,len,b=0;
+        char ch;
+        len=s.length();
+        for(i=0;i<len;i=i+1)
+        {
+            ch=s.charAt(i);
+            if(ch==' ')
+                b=b+1;
+        }
+        int nw=b+1;
+        System.out.println("Number of blank spaces:"+b);
+        System.out.println("Number of words:"+nw);
+    }
+}
+
+//Input a word and check for palindrome. For e.g. madam,nitin,abba,etc.
+public class Palin_String
+{
+    public static void main(String s)
+    {
+        int i,len;
+        char ch;
+        String r="";
+        len=s.length();
+        for(i=(len-1);i>=0;i=i-1)
+        {
+            ch=s.charAt(i);
+            r=r+ch;
+        }
+        if(s.equals(r))
+            System.out.println("Palindrome String");
+        else 
+            System.out.println("Not a Palindrome String");
+    }
+}
+
+//Input a word and check for palindrome. For e.g. madam,nitin,abba,etc.
+public class Palin_String
+{
+    public static void main(String s)
+    {
+        int i,len;
+        char ch;
+        String r="";
+        len=s.length();
+        for(i=(len-1);i>=0;i=i-1)
+        {
+            ch=s.charAt(i);
+            r=r+ch;
+        }
+        if(s.equals(r))
+            System.out.println("Palindrome String");
+        else 
+            System.out.println("Not a Palindrome String");
+    }
+}
