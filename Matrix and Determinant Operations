@@ -1,0 +1,294 @@
+import java.util.*;
+public class Matrix
+{
+    float [][]mat;
+
+    public Matrix(float [][]k)
+    {
+        mat=k;
+    }
+
+    public Matrix()
+    {
+
+    }
+
+    public Matrix cofactor(int row, int col)
+    {
+        float [][]nm=new float [mat.length-1][mat[0].length-1];
+        int a=0,b=0;
+        for(int i=0;i<mat.length;i=i+1)
+        {
+            if (i==row)
+            {
+                continue;
+            }
+            for(int j=0;j<mat[0].length;j=j+1)
+            {
+                if (j==col)
+                {
+                    continue;
+                }
+                nm[b][a]=mat[i][j];
+                a=a+1;
+            }
+            a=0;
+            b=b+1;
+        }
+        Matrix nm1= new Matrix(nm);
+        return nm1;
+    }
+
+    public float determinant()
+    {
+        float ans=0;
+        if(mat.length==1)
+        {
+            return mat[0][0];
+        }
+        else
+        {
+            for(int i=0;i<mat[0].length;i=i+1)
+            {
+                Matrix x=cofactor(0,i);
+                ans=ans+(float)Math.pow(-1,i)*(mat[0][i])*x.determinant();
+            }
+        }
+        return ans;
+    }
+
+    public void input_Mat()
+    {
+        Scanner sc=new Scanner(System.in);
+        int row,col;
+        System.out.print("Please enter number of rows:");
+        row=sc.nextInt();
+        System.out.print("Please enter number of columns:");
+        col=sc.nextInt();
+        mat=new float[row][col];
+        for(int i=0;i<row;i=i+1)
+        {
+            for(int j=0;j<col;j=j+1)
+            {
+                System.out.print("Enter the element["+i+"],["+j+"]");
+                mat[i][j]=sc.nextFloat();
+            }
+        }
+        print_Mat();
+    }
+
+    public void print_Mat()
+    {
+        for (int i=0;i<mat.length;i=i+1)
+        {
+            for (int j=0;j<mat[0].length;j=j+1)
+            {
+                System.out.print(mat[i][j]+"  ");
+            }
+            System.out.println();
+        }
+    }
+
+    public int[][] mat_Mult(int[][]m1, int[][]m2)
+    {
+        int [][]x=new int[m1.length][m2[0].length];
+        for(int i=0;i<m1.length;i=i+1)
+        {
+            for(int j=0;j<m2[0].length;j=j+1) 
+            {
+                for(int k=0;k<m1[0].length;k=k+1)
+                {
+                    x[i][j]+=m1[i][k]*m2[k][j];
+                }
+            }
+        }
+        return x;
+    }
+
+    float[][] multi_Scalar(float[][]x, float f, int r)
+    {
+        int row=x.length;
+        int column=x[0].length;
+        for(int i=0;i<row;i=i+1)  
+        {
+            if(r==i)
+            {
+                for(int j=0;j<column;j=j+1)
+                {
+                    x[i][j]=(x[i][j])*f;
+                }
+            }
+        }
+        return x;
+    }
+
+    float[][] division_Scalar(float[][]x, float f, int r)
+    {
+        int row=x.length;
+        int column=x[0].length;
+        for(int i=0;i<row;i=i+1)
+        {
+            if(r==i)
+            {
+                for(int j=0;j<column;j=j+1)
+                {
+                    x[i][j]=(x[i][j])/f;
+                }
+            }
+        }
+        return x;
+    }
+
+    float[][] exchange_Row(float[][]x, int r1, int r2)
+    {
+        int row=x.length;
+        int column= x[0].length;
+        float [] temp;
+        temp=new float [row];
+        for(int i=0;i<row;i=i+1)
+        {
+            if(i==r1)
+            {
+                temp=x[i];
+                x[i]=x[r2];
+                x[r2]=temp;
+            }
+            else if(i==r2)
+            {
+                continue;
+            }
+            else
+            {
+                x[i]=x[i];
+            }
+        }
+        return x;
+    }
+
+    float[][] add_Row(float [][]x, int r1, int r2)
+    {
+        int row=x.length;
+        int column=x[0].length;
+        float [] temp;
+        temp=new float [row];
+        for(int i=0;i<row;i=i+1)
+        {
+            if(i==r1)
+            {
+                for(int j=0;j<column;j=j+1)
+                {
+                    temp[j]=x[r1][j]+x[r2][j];
+                }
+                x[r2]=temp;
+            }
+            else if(i==r2)
+            {
+                continue;
+            }
+            else
+            {
+                x[i]=x[i];
+            }
+        }
+        return x;
+    }
+
+    float[][] add_Multiply(float[][] x, int r1, int r2, float f)
+    {
+        float[][] res= add_Row(multi_Scalar(x,f,r1),r1,r2);
+        return division_Scalar(res,f,r1);
+    }
+
+    float[][] gen_UnitMat(int x)
+    {
+        float[][] arr=new float[x][x];
+        for(int i=0;i<x;i=i+1)
+        {
+            for(int j=0;j<x;j=j+1)
+            {
+                if(j==i)
+                {
+                    arr[i][j]=1;
+                }
+                else
+                {
+                    arr[i][j]=0;
+                }
+            }
+        }
+        return arr;
+    }
+
+    float[][] augment(float[][]x, float[][]y)
+    {
+        int len= x[0].length;
+        float[][]aug = new float[len][len+y[0].length];
+        int a=0;
+        for(int i=0;i<len;i=i+1)
+        {
+            for(int j=0;j<len+y[0].length;j=j+1)
+            {
+                if (j>=len)
+                {
+                    aug[i][j] = y[i][a];
+                    a=a+1;
+                }
+                else
+                {
+                    aug[i][j]= x[i][j];
+                }
+            }
+            a=0;
+        }
+        return aug;
+    }
+
+    float[][] deaugment (float[][]x, int n)
+    {
+        int len1=x.length;
+        int len2=x[0].length;
+        float[][] deaug= new float[len1][len2-n];
+        int a=0;
+        for(int i=0;i<len1;i=i+1)
+        {
+            for(int j=n;j<len2;j=j+1)
+            {
+                deaug[i][a]=x[i][j];
+                a=a+1;
+            }
+            a=0;
+        }
+        return deaug;
+    }
+
+    public float[][] mat_Inverse(float [][]x)
+    {
+        int len=x.length;
+        float[][]aug=augment(x,gen_UnitMat(len));
+        for(int i=0;i<len;i=i+1)
+        {
+            aug=division_Scalar(aug,aug[i][i],i);
+            for(int j=0;j<len;j=j+1)
+            {
+                if(j==i)
+                {
+                    continue;
+                }
+                else
+                {
+                    aug=add_Multiply(aug,i,j,(-1*aug[i][j]));
+                }
+            }
+        }
+        float[][]ans=deaugment(aug,len);
+        return ans;
+    }
+
+    public static void main(String []args)
+    {
+        Scanner sc=new Scanner(System.in);
+        Matrix m= new Matrix();
+        m.input_Mat();
+        System.out.println("Determinant is: "+m.determinant());
+    }
+}
