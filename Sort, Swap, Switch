@@ -1,0 +1,113 @@
+public class Bubble_Sort
+{
+    public static void main(int a[])
+    {
+        int i,j,l,t;
+        l=a.length;
+        for (i=0;i<l;i=i+1)
+        {
+            for(j=0;j<(l-1)-i;j=j+1)
+            {
+                if(a[j]>a[j+1])
+                {
+                    t=a[j];
+                    a[j]=a[j+1];
+                    a[j+1]=t;
+                }
+            }
+        }
+        for(i=0;i<l;i=i+1)
+        System.out.println(a[i]);
+    }
+}
+
+public class Selection_Sort
+{
+    public static void main(int a[])
+    {
+        int i,j,l,t;
+        l=a.length;
+        for (i=0;i<l-1;i=i+1)
+        {
+            for(j=i+1;j<l;j=j+1)
+            {
+                if(a[i]>a[j])
+                {
+                    t=a[i];
+                    a[i]=a[j];
+                    a[j]=t;
+                }
+            }
+        }
+        for(i=0;i<l;i=i+1)
+        System.out.println(a[i]);
+    }
+}
+
+public class Searching
+{
+    public static void main(int a[], int num)
+    {
+        int i,p=-1,len;
+        len=a.length;
+        for(i=0;i<len;i=i+1)
+        {
+            if(num==a[i])
+            {
+                p=i;
+                break;
+            }
+        }
+        if(p>-1)
+        System.out.println("Number found at:"+p);
+        else
+        System.out.println("Number not found");
+    }
+}
+
+public class Bin_Search
+{
+    public static void main(int a[], int num)
+    {
+        int len=a.length;
+        int beg=0,last=(len-1),mid,p=-1;
+        while(beg<=last)
+        {
+            mid=(beg+last)/2;
+            if(num==a[mid])
+            {
+                p=mid;
+                break;
+            }
+            else if(num>a[mid])
+            beg=mid+1;
+            else
+            last=mid-1;
+        }
+        if(p>-1)
+        System.out.println("Number found at:"+p);
+        else
+        System.out.println("Number not found");
+    }
+}
+
+public class Merging
+{
+    public static void main(int m,int n, int a[], int b[])
+    {
+        int c[]=new int [m+n];
+        int i;
+        for(i=0;i<m;i=i+1)
+        {
+            c[i]=a[i];
+        }
+        for(i=0;i<n;i=i+1)
+        {
+            c[i+m]=b[i];
+        }
+        for(i=0;i<(m+n);i=i+1)
+        {
+            System.out.println(c[i]);
+        }
+    }
+}
